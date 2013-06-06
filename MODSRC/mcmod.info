@@ -1,0 +1,17 @@
+[
+{
+  "modid": "CraftCreation",
+  "name": "CraftCreation",
+  "description": "A mod that allows, as the name implies, to craft Heraldry in minecraft.",
+  "version": "1.0",
+  "mcversion": "1.5+",
+  "logoFile": "",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["Vazkii"],
+  "credits": "Lorc for the icons (game-icons.net)",
+  "parent": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
