@@ -21,7 +21,7 @@ public class RenderTileBanner extends TileEntitySpecialRenderer {
 		GL11.glTranslated(d0, d1, d2);
 		GL11.glTranslated(0.5F, 1.5F, 0.5F);
 		GL11.glScalef(1F, -1F, -1F);
-		
+
 		int meta = banner.getBlockMetadata();
 		boolean hanging = BlockHeraldry.isHanging(meta);
 		if(hanging) {

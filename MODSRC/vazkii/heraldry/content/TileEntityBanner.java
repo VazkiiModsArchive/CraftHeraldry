@@ -18,11 +18,13 @@ public class TileEntityBanner extends TileEntity {
 
 	@Override
 	public void readFromNBT(NBTTagCompound par1nbtTagCompound) {
+		super.readFromNBT(par1nbtTagCompound);
 		data = CrestData.readFromCmp(par1nbtTagCompound);
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound par1nbtTagCompound) {
+		super.writeToNBT(par1nbtTagCompound);
 		if(data != null)
 			data.writeToCmp(par1nbtTagCompound);
 	}

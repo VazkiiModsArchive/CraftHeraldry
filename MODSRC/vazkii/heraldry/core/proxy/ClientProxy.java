@@ -32,15 +32,17 @@ public class ClientProxy extends CommonProxy {
 
 		readIconNames();
 
-		// Preload textures to prevent a lagspike
-		RenderEngine engine = Minecraft.getMinecraft().renderEngine;
-		int current = GL11.glGetInteger(GL11.GL_TEXTURE_2D);
-		engine.bindTexture(LibResources.ICON_SHEET_0);
-		engine.bindTexture(LibResources.ICON_SHEET_1);
+		if(CommonProxy.preloadTextures) {
+			// Preload textures to prevent a lagspike
+			RenderEngine engine = Minecraft.getMinecraft().renderEngine;
+			int current = GL11.glGetInteger(GL11.GL_TEXTURE_2D);
+			engine.bindTexture(LibResources.ICON_SHEET_0);
+			engine.bindTexture(LibResources.ICON_SHEET_1);
 
-		// Reset, preventing any possible side effects
-		ReflectionHelper.setPrivateValue(RenderEngine.class, engine, current, 10);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, current);
+			// Reset, preventing any possible side effects
+			ReflectionHelper.setPrivateValue(RenderEngine.class, engine, current, 10);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, current);
+		}
 	}
 
 	private void readIconNames() {
