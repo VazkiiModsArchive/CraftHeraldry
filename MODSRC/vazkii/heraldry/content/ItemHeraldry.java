@@ -84,10 +84,14 @@ public class ItemHeraldry extends Item {
     			int meta = Math.round((yaw % 360F - 90F) / 45F);
                 if(meta < 0)
                 	meta = 6 - meta;
+                if(meta > 7)
+                	meta = 6;
+                
                 par3World.setBlock(par4, par5 + 1, par6, CommonProxy.blockHeraldry.blockID, meta, 2);
     			par3World.playSoundEffect(par4, par5, par6, "step.wood", 1F, 0.2F);
                 if(!par3World.isRemote)
                 	par2EntityPlayer.swingItem();
+                par1ItemStack.stackSize--;
                 return true;
             }
 		} else if(par1ItemStack.getItemDamage() == 2) {
@@ -100,6 +104,7 @@ public class ItemHeraldry extends Item {
     			par3World.playSoundEffect(par4, par5, par6, "step.wood", 1F, 0.2F);
     			if(!par3World.isRemote)
                 	par2EntityPlayer.swingItem();
+                par1ItemStack.stackSize--;
             }
 		}
 		return false;
