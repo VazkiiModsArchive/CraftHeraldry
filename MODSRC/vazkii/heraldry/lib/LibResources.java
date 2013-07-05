@@ -2,12 +2,14 @@ package vazkii.heraldry.lib;
 
 public final class LibResources {
 
-	public static final String ROOT = "/mods/CraftHeraldry/";
+	public static final String ICON_NAMES = "/assets/craftheraldry/textures/icons/iconNames.txt";
 
-	public static final String ROOT_ICONS = ROOT + "icons/";
-	public static final String ROOT_MODEL = ROOT + "model/";
+	public static final String ROOT = "craftheraldry:";
 
-	public static final String ICON_NAMES = ROOT_ICONS + "iconNames.txt";
+	public static final String ROOT_TEXTURES = ROOT + "textures/";
+	public static final String ROOT_ICONS = ROOT_TEXTURES + "icons/";
+	public static final String ROOT_MODEL = ROOT_TEXTURES + "model/";
+
 	public static final String ICON_SHEET_0 = ROOT_ICONS + "iconSheet0.png";
 	public static final String ICON_SHEET_1 = ROOT_ICONS + "iconSheet1.png";
 

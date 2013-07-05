@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
 import vazkii.heraldry.CraftHeraldry;
 import vazkii.heraldry.content.BlockHeraldry;
 import vazkii.heraldry.content.ItemHeraldry;
@@ -19,9 +18,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
 
-	private static final String CONFIG_PRELOAD = "textures.preload";
-	private static final String CONFIG_PRELOAD_COMMENT = "For clients only. Set to false to disable texture preloading, this prevents the textures from being loaded on startup, decreases load times, but creates a lagspike the first time you open the heraldry scroll GUI. It may also fix a problem with optifine.";
-
 	public static boolean preloadTextures = true;
 
 	public static Item itemHeraldry;
@@ -29,11 +25,10 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
 		initConfig(event);
+		initContent();
 	}
 
 	public void init() {
-		initContent();
-
 		NetworkRegistry.instance().registerGuiHandler(CraftHeraldry.instance, new GuiHandler());
 	}
 
@@ -48,9 +43,6 @@ public class CommonProxy {
 
 		LibContent.itemID = config.getItem(LibContent.HERALDRY_ITEM_NAME, LibContent.DEFAULT_ITEM_ID).getInt(LibContent.DEFAULT_ITEM_ID);
 		LibContent.blockID = config.getBlock(LibContent.HERALDRY_BLOCK_NAME, LibContent.DEFAULT_BLOCK_ID).getInt(LibContent.DEFAULT_BLOCK_ID);
-
-		Property propPreload = config.get(Configuration.CATEGORY_GENERAL, CONFIG_PRELOAD, true, CONFIG_PRELOAD_COMMENT);
-		preloadTextures = propPreload.getBoolean(true);
 
 		config.save();
 	}

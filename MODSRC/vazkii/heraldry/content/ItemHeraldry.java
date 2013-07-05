@@ -86,7 +86,7 @@ public class ItemHeraldry extends Item {
                 	meta = 6 - meta;
                 if(meta > 7)
                 	meta = 6;
-                
+
                 par3World.setBlock(par4, par5 + 1, par6, CommonProxy.blockHeraldry.blockID, meta, 2);
     			par3World.playSoundEffect(par4, par5, par6, "step.wood", 1F, 0.2F);
                 if(!par3World.isRemote)

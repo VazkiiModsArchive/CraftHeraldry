@@ -8,19 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderEngine;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import org.lwjgl.opengl.GL11;
-
 import vazkii.heraldry.CraftHeraldry;
 import vazkii.heraldry.client.render.RenderTileBanner;
 import vazkii.heraldry.content.TileEntityBanner;
 import vazkii.heraldry.core.network.PacketPayload;
 import vazkii.heraldry.lib.LibResources;
 import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class ClientProxy extends CommonProxy {
 
@@ -31,18 +26,6 @@ public class ClientProxy extends CommonProxy {
 		super.init();
 
 		readIconNames();
-
-		if(CommonProxy.preloadTextures) {
-			// Preload textures to prevent a lagspike
-			RenderEngine engine = Minecraft.getMinecraft().renderEngine;
-			int current = GL11.glGetInteger(GL11.GL_TEXTURE_2D);
-			engine.bindTexture(LibResources.ICON_SHEET_0);
-			engine.bindTexture(LibResources.ICON_SHEET_1);
-
-			// Reset, preventing any possible side effects
-			ReflectionHelper.setPrivateValue(RenderEngine.class, engine, current, 10);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, current);
-		}
 	}
 
 	private void readIconNames() {

@@ -31,18 +31,30 @@ public class BlockHeraldry extends BlockContainer {
 
 	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
+		TileEntity tile = par1World.getBlockTileEntity(par2, par3, par4);
 		ItemStack stack = par5EntityPlayer.getCurrentEquippedItem();
-		if(stack != null && stack.itemID == CommonProxy.itemHeraldry.itemID && stack.getItemDamage() == 0) {
-			CrestData data = ItemHeraldry.readCrestData(stack);
-			TileEntity tile = par1World.getBlockTileEntity(par2, par3, par4);
-			if(tile != null && tile instanceof TileEntityBanner) {
-				((TileEntityBanner) tile).data = data;
-				PacketDispatcher.sendPacketToAllInDimension(tile.getDescriptionPacket(), par5EntityPlayer.dimension);
-				return true;
+
+		if(tile != null && tile instanceof TileEntityBanner && !par1World.isRemote) {
+			boolean holding = stack != null;
+			TileEntityBanner banner = (TileEntityBanner) tile;
+
+			if(!holding && par5EntityPlayer.isSneaking()) {
+				banner.locked = !banner.locked;
+				par5EntityPlayer.addChatMessage("Banner " + (banner.locked ? "Locked" : "Unlocked") + ".");
+			}
+
+			if(holding && stack.itemID == CommonProxy.itemHeraldry.itemID && stack.getItemDamage() == 0) {
+				if(banner.locked) {
+					par5EntityPlayer.addChatMessage("This banner is locked. Shift-Right click with an empty hand to unlock it.");
+				} else {
+					CrestData data = ItemHeraldry.readCrestData(stack);
+					((TileEntityBanner) tile).data = data;
+					PacketDispatcher.sendPacketToAllInDimension(tile.getDescriptionPacket(), par5EntityPlayer.dimension);
+				}
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override

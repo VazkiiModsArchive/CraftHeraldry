@@ -5,6 +5,7 @@ import java.awt.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.resources.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -52,7 +53,7 @@ public class ModelBanner extends ModelBase {
 	}
 
 	public void render(boolean full, CrestData crest) {
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResources.MODEL_BANNER);
+		Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation(LibResources.MODEL_BANNER));
 		if(full) {
 			BannerHold.render(0.0625F);
 			BannerHold2.render(0.0625F);
@@ -73,7 +74,7 @@ public class ModelBanner extends ModelBase {
 			GL11.glColor3f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F);
 			GL11.glPopMatrix();
 		}
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResources.MODEL_BANNER);
+		Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation(LibResources.MODEL_BANNER));
 		BannerCloth.render(0.0625F);
 		GL11.glColor3f(1F, 1F, 1F);
 	}
