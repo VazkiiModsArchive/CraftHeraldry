@@ -5,13 +5,14 @@ import java.awt.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
 import vazkii.heraldry.client.render.HeraldryRender;
 import vazkii.heraldry.core.data.CrestData;
 import vazkii.heraldry.lib.LibResources;
+
 public class ModelBanner extends ModelBase {
 
 	ModelRenderer BannerHold;
