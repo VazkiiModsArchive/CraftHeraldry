@@ -31,6 +31,7 @@ public class RenderTileBanner extends TileEntitySpecialRenderer {
 
 		model.render(!hanging, banner.data);
 		GL11.glScalef(1F, -1F, -1F);
+		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
 	}
 
