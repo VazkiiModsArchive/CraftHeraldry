@@ -1,6 +1,5 @@
 package vazkii.heraldry;
 
-import vazkii.heraldry.core.network.PacketHandler;
 import vazkii.heraldry.core.proxy.CommonProxy;
 import vazkii.heraldry.lib.LibMisc;
 import cpw.mods.fml.common.Mod;

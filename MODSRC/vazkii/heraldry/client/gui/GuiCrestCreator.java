@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
 
-import vazkii.heraldry.client.model.ModelBanner;
 import vazkii.heraldry.client.render.HeraldryRender;
 import vazkii.heraldry.content.ItemHeraldry;
 import vazkii.heraldry.core.data.CrestData;
@@ -28,12 +27,12 @@ public class GuiCrestCreator extends GuiScreen {
 	public CrestData currentCrest = new CrestData(0x000000, 0xFFFFFF, (short) 0);
 
 	public List<Integer> viewableCrests = new ArrayList();
-	
+
 	GuiSlider[] color1Sliders;
 	GuiSlider[] color2Sliders;
 
 	GuiTextField field;
-	
+
 	public GuiCrestCreator(ItemStack stack) {
 		if(stack != null) {
 			CrestData tempData = ItemHeraldry.readCrestData(stack);
@@ -70,7 +69,7 @@ public class GuiCrestCreator extends GuiScreen {
 		field = new GuiTextField(fontRendererObj, 85, height - 25, 140, 20);
 		field.setFocused(true);
 		field.setCanLoseFocus(false);
-		
+
 		filterViewableCrests();
 		updateSliders(currentCrest);
 	}
@@ -98,23 +97,23 @@ public class GuiCrestCreator extends GuiScreen {
 		fontRendererObj.setUnicodeFlag(uni);
 
 		field.drawTextBox();
-		
+
 		super.drawScreen(par1, par2, par3);
 	}
-	
+
 	@Override
 	protected void mouseClicked(int p_73864_1_, int p_73864_2_, int p_73864_3_) {
 		super.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
 		field.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
 	}
-	
+
 	@Override
 	protected void keyTyped(char p_73869_1_, int p_73869_2_) {
 		super.keyTyped(p_73869_1_, p_73869_2_);
 		field.textboxKeyTyped(p_73869_1_, p_73869_2_);
 		filterViewableCrests();
 	}
-	
+
 	private void filterViewableCrests() {
 		viewableCrests.clear();
 		for(int i = 0; i < LibResources.ICON_COUNT; i++)
@@ -125,34 +124,34 @@ public class GuiCrestCreator extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton par1GuiButton) {
 		switch(par1GuiButton.id) {
-			case 6 : { // Random
-				Random rand = new Random();
-				currentCrest.color1 = rand.nextInt(0xFFFFFF);
-				currentCrest.color2 = rand.nextInt(0xFFFFFF);
-				currentCrest.icon = (short) rand.nextInt(LibResources.ICON_COUNT);
-				updateSliders(currentCrest);
-				break;
-			}
-			case 7 : { // Done
-				System.out.println(currentCrest);
-				PacketHandler.INSTANCE.sendToServer(new PacketChangeBanner(currentCrest));
-				mc.displayGuiScreen(null);
-				break;
-			}
-			case 8 : { // Invert
-				int color1 = currentCrest.color2;
-				int color2 = currentCrest.color1;
-				currentCrest.color1 = color1;
-				currentCrest.color2 = color2;
-				updateSliders(currentCrest);
-				break;
-			}
-			case 9 : { // Invert
-				currentCrest.color1 = 0xFFFFFF - currentCrest.color1;
-				currentCrest.color2 = 0xFFFFFF - currentCrest.color2;
-				updateSliders(currentCrest);
-				break;
-			}
+		case 6 : { // Random
+			Random rand = new Random();
+			currentCrest.color1 = rand.nextInt(0xFFFFFF);
+			currentCrest.color2 = rand.nextInt(0xFFFFFF);
+			currentCrest.icon = (short) rand.nextInt(LibResources.ICON_COUNT);
+			updateSliders(currentCrest);
+			break;
+		}
+		case 7 : { // Done
+			System.out.println(currentCrest);
+			PacketHandler.INSTANCE.sendToServer(new PacketChangeBanner(currentCrest));
+			mc.displayGuiScreen(null);
+			break;
+		}
+		case 8 : { // Invert
+			int color1 = currentCrest.color2;
+			int color2 = currentCrest.color1;
+			currentCrest.color1 = color1;
+			currentCrest.color2 = color2;
+			updateSliders(currentCrest);
+			break;
+		}
+		case 9 : { // Invert
+			currentCrest.color1 = 0xFFFFFF - currentCrest.color1;
+			currentCrest.color2 = 0xFFFFFF - currentCrest.color2;
+			updateSliders(currentCrest);
+			break;
+		}
 		}
 	}
 
@@ -194,7 +193,7 @@ public class GuiCrestCreator extends GuiScreen {
 	@Override
 	public void drawDefaultBackground() {
 		if(mc.theWorld != null)
-            drawGradientRect(0, 0, width, height, 0x99000000, 0x77000000);
+			drawGradientRect(0, 0, width, height, 0x99000000, 0x77000000);
 		else drawBackground(0);
 	}
 }

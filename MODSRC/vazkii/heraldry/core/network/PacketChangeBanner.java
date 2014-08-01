@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ChatComponentText;
-import vazkii.heraldry.CraftHeraldry;
 import vazkii.heraldry.content.ItemHeraldry;
 import vazkii.heraldry.core.data.CrestData;
 import vazkii.heraldry.core.proxy.CommonProxy;
@@ -62,7 +61,7 @@ public class PacketChangeBanner implements IMessage, IMessageHandler<PacketChang
 			ItemHeraldry.writeCrestData(item, message.data);
 			player.addChatMessage(new ChatComponentText("Crest edited!"));
 		}
-		
+
 		return null;
 	}
 

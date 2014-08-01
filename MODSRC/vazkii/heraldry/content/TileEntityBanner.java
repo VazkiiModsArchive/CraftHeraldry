@@ -30,7 +30,7 @@ public class TileEntityBanner extends TileEntity {
 		super.readFromNBT(par1nbtTagCompound);
 		readCustomNBT(par1nbtTagCompound);
 	}
-	
+
 	public void readCustomNBT(NBTTagCompound cmp) {
 		data = CrestData.readFromCmp(cmp);
 		locked = cmp.getBoolean("locked");
@@ -41,7 +41,7 @@ public class TileEntityBanner extends TileEntity {
 		super.writeToNBT(par1nbtTagCompound);
 		writeCustomNBT(par1nbtTagCompound);
 	}
-	
+
 	public void writeCustomNBT(NBTTagCompound cmp) {
 		if(data != null)
 			data.writeToCmp(cmp);

@@ -62,7 +62,7 @@ public class ModelBanner extends ModelBase {
 		}
 
 		BannerBar.render(0.0625F);
-		
+
 		if(crest != null && crest.icon != -1) {
 			GL11.glPushMatrix();
 			float scale = 92F;
@@ -77,7 +77,7 @@ public class ModelBanner extends ModelBase {
 			GL11.glPopMatrix();
 		}
 		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(LibResources.MODEL_BANNER));
-		
+
 		BannerCloth.render(0.0625F);
 		GL11.glColor3f(1F, 1F, 1F);
 	}

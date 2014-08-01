@@ -9,7 +9,7 @@ public class PacketHandler {
 
 	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(LibMisc.MOD_ID);
 
-    public static void init() {
-        INSTANCE.registerMessage(PacketChangeBanner.class, PacketChangeBanner.class, 0, Side.SERVER);
-    }
+	public static void init() {
+		INSTANCE.registerMessage(PacketChangeBanner.class, PacketChangeBanner.class, 0, Side.SERVER);
+	}
 }

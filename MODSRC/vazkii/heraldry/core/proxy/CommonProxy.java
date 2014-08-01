@@ -10,7 +10,6 @@ import vazkii.heraldry.content.BlockHeraldry;
 import vazkii.heraldry.content.ItemHeraldry;
 import vazkii.heraldry.content.TileEntityBanner;
 import vazkii.heraldry.core.network.GuiHandler;
-import vazkii.heraldry.core.network.PacketChangeBanner;
 import vazkii.heraldry.core.network.PacketHandler;
 import vazkii.heraldry.lib.LibContent;
 import vazkii.heraldry.lib.LibMisc;

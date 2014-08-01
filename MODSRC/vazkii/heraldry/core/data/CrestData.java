@@ -1,7 +1,5 @@
 package vazkii.heraldry.core.data;
 
-import java.io.Serializable;
-
 import net.minecraft.nbt.NBTTagCompound;
 
 public class CrestData {
@@ -13,7 +11,7 @@ public class CrestData {
 	public int color1;
 	public int color2;
 	public short icon;
-	
+
 	public CrestData(int color1, int color2, short icon) {
 		this.color1 = color1;
 		this.color2 = color2;

@@ -33,7 +33,7 @@ public class ItemHeraldry extends Item {
 		setUnlocalizedName(LibContent.HERALDRY_ITEM_NAME);
 		setHasSubtypes(true);
 	}
-	
+
 	@Override
 	public String getItemStackDisplayName(ItemStack par1ItemStack) {
 		return par1ItemStack.getItemDamage() == 0 ? LibContent.SCROLL_DISPLAY_NAME : par1ItemStack.getItemDamage() == 1 ? LibContent.BANNER_DISPLAY_NAME : LibContent.WALL_BANNER_DISPLAY_NAME;
@@ -76,36 +76,36 @@ public class ItemHeraldry extends Item {
 
 		if(par7 == ForgeDirection.UP.ordinal() && par1ItemStack.getItemDamage() == 1) {
 			boolean can = par3World.isAirBlock(par4, par5 + 1, par6) && par3World.isAirBlock(par4, par5 + 2, par6);
-            if(can) {
-    			float yaw = par2EntityPlayer.rotationYaw;
-                while(yaw < 0)
-                	yaw += 360F;
+			if(can) {
+				float yaw = par2EntityPlayer.rotationYaw;
+				while(yaw < 0)
+					yaw += 360F;
 
-    			int meta = Math.round((yaw % 360F - 90F) / 45F);
-                if(meta < 0)
-                	meta = 6 - meta;
-                if(meta > 7)
-                	meta = 6;
+				int meta = Math.round((yaw % 360F - 90F) / 45F);
+				if(meta < 0)
+					meta = 6 - meta;
+				if(meta > 7)
+					meta = 6;
 
-                par3World.setBlock(par4, par5 + 1, par6, CommonProxy.blockHeraldry, meta, 2);
-    			par3World.playSoundEffect(par4, par5, par6, "step.wood", 1F, 0.2F);
-                if(!par3World.isRemote)
-                	par2EntityPlayer.swingItem();
-                par1ItemStack.stackSize--;
-                return true;
-            }
+				par3World.setBlock(par4, par5 + 1, par6, CommonProxy.blockHeraldry, meta, 2);
+				par3World.playSoundEffect(par4, par5, par6, "step.wood", 1F, 0.2F);
+				if(!par3World.isRemote)
+					par2EntityPlayer.swingItem();
+				par1ItemStack.stackSize--;
+				return true;
+			}
 		} else if(par1ItemStack.getItemDamage() == 2) {
 			ForgeDirection direction = ForgeDirection.getOrientation(par7);
 			boolean can = par3World.isSideSolid(par4, par5, par6, direction, false) && par3World.isAirBlock(par4 + direction.offsetX, par5 - 1, par6 + direction.offsetZ);
-            if(can) {
-    			int meta = (par7 == 2 ? 3 : par7 == 3 ? 1 : par7 == 4 ? 2 : 0) * 2 + 8;
+			if(can) {
+				int meta = (par7 == 2 ? 3 : par7 == 3 ? 1 : par7 == 4 ? 2 : 0) * 2 + 8;
 
-    			par3World.setBlock(par4 + direction.offsetX, par5, par6 + direction.offsetZ, CommonProxy.blockHeraldry, meta, 2);
-    			par3World.playSoundEffect(par4, par5, par6, "step.wood", 1F, 0.2F);
-    			if(!par3World.isRemote)
-                	par2EntityPlayer.swingItem();
-                par1ItemStack.stackSize--;
-            }
+				par3World.setBlock(par4 + direction.offsetX, par5, par6 + direction.offsetZ, CommonProxy.blockHeraldry, meta, 2);
+				par3World.playSoundEffect(par4, par5, par6, "step.wood", 1F, 0.2F);
+				if(!par3World.isRemote)
+					par2EntityPlayer.swingItem();
+				par1ItemStack.stackSize--;
+			}
 		}
 		return false;
 	}

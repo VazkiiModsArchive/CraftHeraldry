@@ -38,7 +38,7 @@ public class BlockHeraldry extends BlockContainer {
 	public void registerBlockIcons(IIconRegister p_149651_1_) {
 		// NO-OP
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
 		TileEntity tile = par1World.getTileEntity(par2, par3, par4);
@@ -87,22 +87,22 @@ public class BlockHeraldry extends BlockContainer {
 		if(isHanging(meta)) {
 			float thickness = 0.1F;
 			switch(getOrientation(meta)) {
-				case 0 : {
-					setBlockBounds(0F, 0F, 0F, thickness, 1F, 1F);
-					break;
-				}
-				case 2 : {
-					setBlockBounds(0F, 0F, 0F, 1F, 1F, thickness);
-					break;
-				}
-				case 4 : {
-					setBlockBounds(1F - thickness, 0F, 0F, 1F, 1F, 1F);
-					break;
-				}
-				case 6 : {
-					setBlockBounds(0F, 0F, 1F - thickness, 1F, 1F, 1F);
-					break;
-				}
+			case 0 : {
+				setBlockBounds(0F, 0F, 0F, thickness, 1F, 1F);
+				break;
+			}
+			case 2 : {
+				setBlockBounds(0F, 0F, 0F, 1F, 1F, thickness);
+				break;
+			}
+			case 4 : {
+				setBlockBounds(1F - thickness, 0F, 0F, 1F, 1F, 1F);
+				break;
+			}
+			case 6 : {
+				setBlockBounds(0F, 0F, 1F - thickness, 1F, 1F, 1F);
+				break;
+			}
 			}
 			return AxisAlignedBB.getBoundingBox(par2 + minX, par3 + minY - 0.5, par4 + minZ, par2 + maxX, par3 + maxY, par4 + maxZ);
 		} else {
@@ -111,7 +111,7 @@ public class BlockHeraldry extends BlockContainer {
 			return AxisAlignedBB.getBoundingBox(par2 + minX, par3 + minY, par4 + minZ, par2 + maxX, par3 + maxY + 0.8, par4 + maxZ);
 		}
 	}
-	
+
 	@Override
 	public Item getItemDropped(int par1, Random par2Random, int par3) {
 		return CommonProxy.itemHeraldry;
