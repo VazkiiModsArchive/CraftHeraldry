@@ -36,8 +36,13 @@ public class GuiCrestCreator extends GuiScreen {
 	public GuiCrestCreator(ItemStack stack) {
 		if(stack != null) {
 			CrestData tempData = ItemHeraldry.readCrestData(stack);
-			if(tempData != null)
+			if(tempData != null) {
 				currentCrest = tempData;
+				if(currentCrest.icon == -1) {
+					currentCrest.icon = 0;
+					currentCrest.color1 = 0x000000;
+				}
+			}
 		}
 	}
 
