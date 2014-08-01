@@ -1,10 +1,10 @@
 [
 {
-  "modid": "CraftCreation",
-  "name": "CraftCreation",
+  "modid": "CraftHeraldry",
+  "name": "CraftHeraldry",
   "description": "A mod that allows, as the name implies, to craft Heraldry in minecraft.",
-  "version": "1.0.3",
-  "mcversion": "1.6+",
+  "version": "ANT:VERSION",
+  "mcversion": "1.7.2",
   "logoFile": "",
   "url": "",
   "updateUrl": "",

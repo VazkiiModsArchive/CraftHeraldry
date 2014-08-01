@@ -4,7 +4,7 @@ public final class LibMisc {
 
 	public static final String MOD_ID = "CraftHeraldry";
 	public static final String MOD_NAME = "CraftHeraldry";
-	public static final String VERSION = "1.1";
+	public static final String VERSION = "ANT:VERSION";
 
 	public static final String COMMON_PROXY = "vazkii.heraldry.core.proxy.CommonProxy";
 	public static final String CLIENT_PROXY = "vazkii.heraldry.core.proxy.ClientProxy";
