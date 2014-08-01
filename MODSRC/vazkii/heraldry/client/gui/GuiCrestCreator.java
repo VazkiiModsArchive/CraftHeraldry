@@ -1,10 +1,13 @@
 package vazkii.heraldry.client.gui;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
@@ -15,6 +18,7 @@ import vazkii.heraldry.content.ItemHeraldry;
 import vazkii.heraldry.core.data.CrestData;
 import vazkii.heraldry.core.network.PacketChangeBanner;
 import vazkii.heraldry.core.network.PacketHandler;
+import vazkii.heraldry.core.proxy.ClientProxy;
 import vazkii.heraldry.lib.LibResources;
 import cpw.mods.fml.client.config.GuiSlider;
 
@@ -23,11 +27,13 @@ public class GuiCrestCreator extends GuiScreen {
 	GuiCrestList list;
 	public CrestData currentCrest = new CrestData(0x000000, 0xFFFFFF, (short) 0);
 
+	public List<Integer> viewableCrests = new ArrayList();
+	
 	GuiSlider[] color1Sliders;
 	GuiSlider[] color2Sliders;
 
-	ModelBanner banner;
-
+	GuiTextField field;
+	
 	public GuiCrestCreator(ItemStack stack) {
 		if(stack != null) {
 			CrestData tempData = ItemHeraldry.readCrestData(stack);
@@ -56,11 +62,14 @@ public class GuiCrestCreator extends GuiScreen {
 		for(GuiSlider slider : color2Sliders)
 			buttonList.add(slider);
 
-		buttonList.add(new GuiButton(6, 20, height - 25, 80, 20, "Randomize"));
+		buttonList.add(new GuiButton(6, 15, height - 25, 60, 20, "Random"));
 		buttonList.add(new GuiButton(7, width / 2 - 80, height - 25, 200, 20, "Done"));
 
-		banner = new ModelBanner();
-
+		field = new GuiTextField(fontRendererObj, 85, height - 25, 140, 20);
+		field.setFocused(true);
+		field.setCanLoseFocus(false);
+		
+		filterViewableCrests();
 		updateSliders(currentCrest);
 	}
 
@@ -83,7 +92,29 @@ public class GuiCrestCreator extends GuiScreen {
 		fontRendererObj.drawStringWithShadow("Foreground Color", 265, 186, 0xFFFFFF);
 		fontRendererObj.setUnicodeFlag(uni);
 
+		field.drawTextBox();
+		
 		super.drawScreen(par1, par2, par3);
+	}
+	
+	@Override
+	protected void mouseClicked(int p_73864_1_, int p_73864_2_, int p_73864_3_) {
+		super.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
+		field.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
+	}
+	
+	@Override
+	protected void keyTyped(char p_73869_1_, int p_73869_2_) {
+		super.keyTyped(p_73869_1_, p_73869_2_);
+		field.textboxKeyTyped(p_73869_1_, p_73869_2_);
+		filterViewableCrests();
+	}
+	
+	private void filterViewableCrests() {
+		viewableCrests.clear();
+		for(int i = 0; i < LibResources.ICON_COUNT; i++)
+			if(ClientProxy.iconNames.get(i).toLowerCase().contains(field.getText().toLowerCase()))
+				viewableCrests.add(i);
 	}
 
 	@Override

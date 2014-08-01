@@ -22,7 +22,7 @@ public class GuiCrestList extends GuiSlot {
 
 	@Override
 	protected int getSize() {
-		return LibResources.ICON_COUNT;
+		return parent.viewableCrests.size();
 	}
 
 	@Override
@@ -32,12 +32,12 @@ public class GuiCrestList extends GuiSlot {
 
 	@Override
 	protected void elementClicked(int i, boolean flag, int j, int k) {
-		parent.currentCrest.icon = (short) i;
+		parent.currentCrest.icon = (short) (int) parent.viewableCrests.get(i);
 	}
 
 	@Override
 	protected boolean isSelected(int i) {
-		return parent.currentCrest.icon == i;
+		return parent.currentCrest.icon == parent.viewableCrests.get(i);
 	}
 
 	@Override
@@ -47,12 +47,12 @@ public class GuiCrestList extends GuiSlot {
 
 	@Override
 	protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator, int a, int b) {
-		CrestData crest = new CrestData(0x000000, 0xFFFFFF, (short) i);
+		CrestData crest = new CrestData(0x000000, 0xFFFFFF, (short) (int) parent.viewableCrests.get(i));
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
 		HeraldryRender.renderCrest(crest, (j + 10) * 2, k * 2, parent.zLevel() + 0.1);
 		GL11.glScalef(2F, 2F, 2F);
 
-		Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(ClientProxy.iconNames.get(i), j + 50, k + 6, 0xFFFFFF);
+		Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(ClientProxy.iconNames.get(crest.icon), j + 50, k + 6, 0xFFFFFF);
 	}
 
 	@Override
