@@ -5,9 +5,7 @@ import java.util.Random;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiSlider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.Packet250CustomPayload;
 
 import org.lwjgl.opengl.GL11;
 
@@ -15,10 +13,10 @@ import vazkii.heraldry.client.model.ModelBanner;
 import vazkii.heraldry.client.render.HeraldryRender;
 import vazkii.heraldry.content.ItemHeraldry;
 import vazkii.heraldry.core.data.CrestData;
+import vazkii.heraldry.core.network.PacketChangeBanner;
 import vazkii.heraldry.core.network.PacketHandler;
-import vazkii.heraldry.core.network.PacketPayload;
 import vazkii.heraldry.lib.LibResources;
-import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.client.config.GuiSlider;
 
 public class GuiCrestCreator extends GuiScreen {
 
@@ -71,19 +69,19 @@ public class GuiCrestCreator extends GuiScreen {
 		drawDefaultBackground();
 		list.drawScreen(par1, par2, par3);
 
-		boolean uni = fontRenderer.getUnicodeFlag();
+		boolean uni = fontRendererObj.getUnicodeFlag();
 
 		GL11.glScalef(2F, 2F, 2F);
 		drawRect((width - 162) / 2, 29, (width - 30) / 2, 95, 0x55FFFFFF);
-		fontRenderer.setUnicodeFlag(true);
-		drawCenteredString(fontRenderer, "Heraldic Editor", width / 4, 3, 0xFFFFFF);
-		fontRenderer.drawStringWithShadow("Preview:", (width - 136) / 2, 18, 0xFFFFFF);
+		fontRendererObj.setUnicodeFlag(true);
+		drawCenteredString(fontRendererObj, "Heraldic Editor", width / 4, 3, 0xFFFFFF);
+		fontRendererObj.drawStringWithShadow("Preview:", (width - 136) / 2, 18, 0xFFFFFF);
 		HeraldryRender.renderCrest(currentCrest, (width - 160) / 2, 30, zLevel + 0.1);
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
 
-		fontRenderer.drawStringWithShadow("Background Color", 265, 76, 0xFFFFFF);
-		fontRenderer.drawStringWithShadow("Foreground Color", 265, 186, 0xFFFFFF);
-		fontRenderer.setUnicodeFlag(uni);
+		fontRendererObj.drawStringWithShadow("Background Color", 265, 76, 0xFFFFFF);
+		fontRendererObj.drawStringWithShadow("Foreground Color", 265, 186, 0xFFFFFF);
+		fontRendererObj.setUnicodeFlag(uni);
 
 		super.drawScreen(par1, par2, par3);
 	}
@@ -100,8 +98,8 @@ public class GuiCrestCreator extends GuiScreen {
 				break;
 			}
 			case 7 : { // Done
-				Packet250CustomPayload packet = PacketHandler.writePayload(new PacketPayload(currentCrest));
-				PacketDispatcher.sendPacketToServer(packet);
+				System.out.println(currentCrest);
+				PacketHandler.INSTANCE.sendToServer(new PacketChangeBanner(currentCrest));
 				mc.displayGuiScreen(null);
 				break;
 			}
@@ -114,10 +112,10 @@ public class GuiCrestCreator extends GuiScreen {
 		float[] color2 = new float[3];
 
 		for(int i = 0; i < 3; i++)
-			color1[i] = color1Sliders[i].sliderValue;
+			color1[i] = (float) color1Sliders[i].sliderValue;
 
 		for(int i = 0; i < 3; i++)
-			color2[i] = color2Sliders[i].sliderValue;
+			color2[i] = (float) color2Sliders[i].sliderValue;
 
 		Color colorRGB1 = new Color((int) (color1[0] * 255), (int) (color1[1] * 255), (int) (color1[2] * 255));
 		Color colorRGB2 = new Color((int) (color2[0] * 255), (int) (color2[1] * 255), (int) (color2[2] * 255));

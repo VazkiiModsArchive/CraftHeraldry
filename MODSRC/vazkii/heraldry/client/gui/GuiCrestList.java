@@ -31,7 +31,7 @@ public class GuiCrestList extends GuiSlot {
 	}
 
 	@Override
-	protected void elementClicked(int i, boolean flag) {
+	protected void elementClicked(int i, boolean flag, int j, int k) {
 		parent.currentCrest.icon = (short) i;
 	}
 
@@ -46,32 +46,13 @@ public class GuiCrestList extends GuiSlot {
 	}
 
 	@Override
-	protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator) {
+	protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator, int a, int b) {
 		CrestData crest = new CrestData(0x000000, 0xFFFFFF, (short) i);
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
 		HeraldryRender.renderCrest(crest, (j + 10) * 2, k * 2, parent.zLevel() + 0.1);
 		GL11.glScalef(2F, 2F, 2F);
 
 		Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(ClientProxy.iconNames.get(i), j + 50, k + 6, 0xFFFFFF);
-	}
-
-	@Override
-	protected void overlayBackground(int par1, int par2, int par3, int par4) {
-		if(Minecraft.getMinecraft().theWorld == null)
-			super.overlayBackground(par1, par2, par3, par4);
-		else {
-			Tessellator tessellator = Tessellator.instance;
-	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-	        tessellator.startDrawingQuads();
-	        GL11.glDisable(GL11.GL_TEXTURE_2D);
-	        tessellator.setColorRGBA_I(0, 0xFF);
-	        tessellator.addVertex(0.0D, par2, 0.0D);
-	        tessellator.addVertex(250, par2, 0.0D);
-	        tessellator.addVertex(250, par1, 0.0D);
-	        tessellator.addVertex(0.0D, par1, 0.0D);
-	        tessellator.draw();
-	        GL11.glEnable(GL11.GL_TEXTURE_2D);
-		}
 	}
 
 	@Override
@@ -101,4 +82,5 @@ public class GuiCrestList extends GuiSlot {
 	        GL11.glDisable(GL11.GL_BLEND);
 		}
 	}
+
 }

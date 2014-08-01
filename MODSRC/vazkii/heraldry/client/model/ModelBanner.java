@@ -54,7 +54,7 @@ public class ModelBanner extends ModelBase {
 	}
 
 	public void render(boolean full, CrestData crest) {
-		Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation(LibResources.MODEL_BANNER));
+		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(LibResources.MODEL_BANNER));
 		if(full) {
 			BannerHold.render(0.0625F);
 			BannerHold2.render(0.0625F);
@@ -62,7 +62,7 @@ public class ModelBanner extends ModelBase {
 		}
 
 		BannerBar.render(0.0625F);
-		if(crest != null) {
+		if(crest != null && crest.icon != -1) {
 			GL11.glPushMatrix();
 			float scale = 92F;
 			float dimScale = 1F / scale;
@@ -75,7 +75,7 @@ public class ModelBanner extends ModelBase {
 			GL11.glColor3f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F);
 			GL11.glPopMatrix();
 		}
-		Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation(LibResources.MODEL_BANNER));
+		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(LibResources.MODEL_BANNER));
 		BannerCloth.render(0.0625F);
 		GL11.glColor3f(1F, 1F, 1F);
 	}

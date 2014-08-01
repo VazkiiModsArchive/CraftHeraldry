@@ -2,16 +2,16 @@ package vazkii.heraldry.content;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import vazkii.heraldry.CraftHeraldry;
 import vazkii.heraldry.core.data.CrestData;
 import vazkii.heraldry.core.proxy.CommonProxy;
@@ -23,25 +23,25 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemHeraldry extends Item {
 
-	Icon iconScroll;
-	Icon iconBanner;
-	Icon iconWallBanner;
+	IIcon iconScroll;
+	IIcon iconBanner;
+	IIcon iconWallBanner;
 
-	public ItemHeraldry(int par1) {
-		super(par1);
+	public ItemHeraldry() {
+		super();
 		setCreativeTab(CreativeTabs.tabDecorations);
 		setUnlocalizedName(LibContent.HERALDRY_ITEM_NAME);
 		setHasSubtypes(true);
 	}
-
+	
 	@Override
-	public String getItemDisplayName(ItemStack par1ItemStack) {
+	public String getItemStackDisplayName(ItemStack par1ItemStack) {
 		return par1ItemStack.getItemDamage() == 0 ? LibContent.SCROLL_DISPLAY_NAME : par1ItemStack.getItemDamage() == 1 ? LibContent.BANNER_DISPLAY_NAME : LibContent.WALL_BANNER_DISPLAY_NAME;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		iconScroll = par1IconRegister.registerIcon(LibMisc.MOD_ID + ":" + LibResources.ICON_SCROLL);
 		iconBanner = par1IconRegister.registerIcon(LibMisc.MOD_ID + ":" + LibResources.ICON_BANNER);
 		iconWallBanner = par1IconRegister.registerIcon(LibMisc.MOD_ID + ":" + LibResources.ICON_WALL_BANNER);
@@ -49,13 +49,13 @@ public class ItemHeraldry extends Item {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIconFromDamage(int par1) {
+	public IIcon getIconFromDamage(int par1) {
 		return par1 == 0 ? iconScroll : par1 == 1 ? iconBanner : iconWallBanner;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List) {
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
 		super.getSubItems(par1, par2CreativeTabs, par3List);
 		par3List.add(new ItemStack(par1, 1, 1));
 		par3List.add(new ItemStack(par1, 1, 2));
@@ -87,7 +87,7 @@ public class ItemHeraldry extends Item {
                 if(meta > 7)
                 	meta = 6;
 
-                par3World.setBlock(par4, par5 + 1, par6, CommonProxy.blockHeraldry.blockID, meta, 2);
+                par3World.setBlock(par4, par5 + 1, par6, CommonProxy.blockHeraldry, meta, 2);
     			par3World.playSoundEffect(par4, par5, par6, "step.wood", 1F, 0.2F);
                 if(!par3World.isRemote)
                 	par2EntityPlayer.swingItem();
@@ -96,11 +96,11 @@ public class ItemHeraldry extends Item {
             }
 		} else if(par1ItemStack.getItemDamage() == 2) {
 			ForgeDirection direction = ForgeDirection.getOrientation(par7);
-			boolean can = par3World.isBlockSolidOnSide(par4, par5, par6, direction, false) && par3World.isAirBlock(par4 + direction.offsetX, par5 - 1, par6 + direction.offsetZ);
+			boolean can = par3World.isSideSolid(par4, par5, par6, direction, false) && par3World.isAirBlock(par4 + direction.offsetX, par5 - 1, par6 + direction.offsetZ);
             if(can) {
     			int meta = (par7 == 2 ? 3 : par7 == 3 ? 1 : par7 == 4 ? 2 : 0) * 2 + 8;
 
-    			par3World.setBlock(par4 + direction.offsetX, par5, par6 + direction.offsetZ, CommonProxy.blockHeraldry.blockID, meta, 2);
+    			par3World.setBlock(par4 + direction.offsetX, par5, par6 + direction.offsetZ, CommonProxy.blockHeraldry, meta, 2);
     			par3World.playSoundEffect(par4, par5, par6, "step.wood", 1F, 0.2F);
     			if(!par3World.isRemote)
                 	par2EntityPlayer.swingItem();

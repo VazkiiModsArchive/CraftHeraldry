@@ -24,14 +24,14 @@ public final class HeraldryRender {
 		int ssy = crest.icon / 32;
 		float scale = 1 / 32F;
 		if(bg) {
-			Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation(LibResources.ICON_SHEET_0));
+			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(LibResources.ICON_SHEET_0));
 			int color = crest.color1;
 			Color colorRGB = new Color(color);
 			GL11.glColor3f(colorRGB.getRed() / 255F, colorRGB.getGreen() / 255F, colorRGB.getBlue() / 255F);
 			drawTexturedQuad(x, y, z - 0.01, 64, 64, ssx * scale, (ssx + 1) * scale, ssy * scale, (ssy + 1) * scale);
 		}
 
-		Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation(LibResources.ICON_SHEET_1));
+		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(LibResources.ICON_SHEET_1));
 		int color1 = crest.color2;
 		Color colorRGB1 = new Color(color1);
 		if(!bg)

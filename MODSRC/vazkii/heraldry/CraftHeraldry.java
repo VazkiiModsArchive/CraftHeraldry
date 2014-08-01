@@ -9,10 +9,8 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 
 @Mod(modid = LibMisc.MOD_ID, name = LibMisc.MOD_NAME, version = LibMisc.VERSION)
-@NetworkMod(serverSideRequired = true, channels = { LibMisc.PACKET_CHANNEL }, packetHandler = PacketHandler.class)
 public class CraftHeraldry {
 
 	@Instance(LibMisc.MOD_ID)

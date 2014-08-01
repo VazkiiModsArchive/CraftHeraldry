@@ -2,36 +2,46 @@ package vazkii.heraldry.content;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Icon;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import vazkii.heraldry.core.data.CrestData;
 import vazkii.heraldry.core.proxy.CommonProxy;
 import vazkii.heraldry.lib.LibContent;
-import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockHeraldry extends BlockContainer {
 
-	public BlockHeraldry(int par1) {
-		super(par1, Material.wood);
+	public BlockHeraldry() {
+		super(Material.wood);
 		setHardness(0.2F);
 		setResistance(0.2F);
-		setUnlocalizedName(LibContent.HERALDRY_BLOCK_NAME);
+		setBlockName(LibContent.HERALDRY_BLOCK_NAME);
 	}
 
 	@Override
+	public void registerBlockIcons(IIconRegister p_149651_1_) {
+		// NO-OP
+	}
+	
+	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
-		TileEntity tile = par1World.getBlockTileEntity(par2, par3, par4);
+		TileEntity tile = par1World.getTileEntity(par2, par3, par4);
 		ItemStack stack = par5EntityPlayer.getCurrentEquippedItem();
 
 		if(tile != null && tile instanceof TileEntityBanner && !par1World.isRemote) {
@@ -40,16 +50,18 @@ public class BlockHeraldry extends BlockContainer {
 
 			if(!holding && par5EntityPlayer.isSneaking()) {
 				banner.locked = !banner.locked;
-				par5EntityPlayer.addChatMessage("Banner " + (banner.locked ? "Locked" : "Unlocked") + ".");
+				par5EntityPlayer.addChatMessage(new ChatComponentText("Banner " + (banner.locked ? "Locked" : "Unlocked") + "."));
 			}
 
-			if(holding && stack.itemID == CommonProxy.itemHeraldry.itemID && stack.getItemDamage() == 0) {
+			if(holding && stack.getItem() == CommonProxy.itemHeraldry && stack.getItemDamage() == 0) {
 				if(banner.locked) {
-					par5EntityPlayer.addChatMessage("This banner is locked. Shift-Right click with an empty hand to unlock it.");
+					par5EntityPlayer.addChatMessage(new ChatComponentText("This banner is locked. Shift-Right click with an empty hand to unlock it."));
 				} else {
 					CrestData data = ItemHeraldry.readCrestData(stack);
-					((TileEntityBanner) tile).data = data;
-					PacketDispatcher.sendPacketToAllInDimension(tile.getDescriptionPacket(), par5EntityPlayer.dimension);
+					NBTTagCompound cmp = new NBTTagCompound();
+					data.writeToCmp(cmp);
+					banner.data = data;
+					par1World.markBlockForUpdate(par2, par3, par4);
 				}
 			}
 		}
@@ -64,8 +76,8 @@ public class BlockHeraldry extends BlockContainer {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int par1, int par2) {
-		return planks.getIcon(0, 1);
+	public IIcon getIcon(int par1, int par2) {
+		return Blocks.planks.getIcon(0, 1);
 	}
 
 	@Override
@@ -92,17 +104,17 @@ public class BlockHeraldry extends BlockContainer {
 					break;
 				}
 			}
-			return AxisAlignedBB.getAABBPool().getAABB(par2 + minX, par3 + minY - 0.5, par4 + minZ, par2 + maxX, par3 + maxY, par4 + maxZ);
+			return AxisAlignedBB.getBoundingBox(par2 + minX, par3 + minY - 0.5, par4 + minZ, par2 + maxX, par3 + maxY, par4 + maxZ);
 		} else {
 			float o = 0.0625F;
 			setBlockBounds(o, 0F, o, 1F - o, 1F, 1F - o);
-			return AxisAlignedBB.getAABBPool().getAABB(par2 + minX, par3 + minY, par4 + minZ, par2 + maxX, par3 + maxY + 0.8, par4 + maxZ);
+			return AxisAlignedBB.getBoundingBox(par2 + minX, par3 + minY, par4 + minZ, par2 + maxX, par3 + maxY + 0.8, par4 + maxZ);
 		}
 	}
-
+	
 	@Override
-	public int idDropped(int par1, Random par2Random, int par3) {
-		return CommonProxy.itemHeraldry.itemID;
+	public Item getItemDropped(int par1, Random par2Random, int par3) {
+		return CommonProxy.itemHeraldry;
 	}
 
 	@Override
@@ -131,7 +143,7 @@ public class BlockHeraldry extends BlockContainer {
 	}
 
 	@Override
-	public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5) {
+	public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, Block par5) {
 		if(!canBlockStay(par1World, par2, par3, par4)) {
 			dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
 			par1World.setBlockToAir(par2, par3, par4);
@@ -148,24 +160,24 @@ public class BlockHeraldry extends BlockContainer {
 			if(canStay) {
 				switch(getOrientation(meta)) {
 				case 0 : {
-					canStay = par1World.isBlockSolidOnSide(par2 - 1, par3, par4, ForgeDirection.EAST, false);
+					canStay = par1World.isSideSolid(par2 - 1, par3, par4, ForgeDirection.EAST, false);
 					break;
 				}
 				case 2 : {
-					canStay = par1World.isBlockSolidOnSide(par2, par3, par4 - 1, ForgeDirection.SOUTH, false);
+					canStay = par1World.isSideSolid(par2, par3, par4 - 1, ForgeDirection.SOUTH, false);
 					break;
 				}
 				case 4 : {
-					canStay = par1World.isBlockSolidOnSide(par2 + 1, par3, par4, ForgeDirection.WEST, false);
+					canStay = par1World.isSideSolid(par2 + 1, par3, par4, ForgeDirection.WEST, false);
 					break;
 				}
 				default : {
-					canStay = par1World.isBlockSolidOnSide(par2, par3, par4 + 1, ForgeDirection.NORTH, false);
+					canStay = par1World.isSideSolid(par2, par3, par4 + 1, ForgeDirection.NORTH, false);
 					break;
 				}
 				}
 			}
-		} else canStay = par1World.isBlockSolidOnSide(par2, par3 - 1, par4, ForgeDirection.UP, false) && par1World.isAirBlock(par2, par3 + 1, par4);
+		} else canStay = par1World.isSideSolid(par2, par3 - 1, par4, ForgeDirection.UP, false) && par1World.isAirBlock(par2, par3 + 1, par4);
 
 		return canStay;
 	}
@@ -184,7 +196,7 @@ public class BlockHeraldry extends BlockContainer {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileEntityBanner();
 	}
 

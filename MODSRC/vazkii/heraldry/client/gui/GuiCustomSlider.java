@@ -1,17 +1,17 @@
 package vazkii.heraldry.client.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiSlider;
-import net.minecraft.client.settings.EnumOptions;
 
 import org.lwjgl.input.Mouse;
+
+import cpw.mods.fml.client.config.GuiSlider;
 
 public class GuiCustomSlider extends GuiSlider {
 
 	private String constString;
 
 	public GuiCustomSlider(int par1, int par2, int par3, String par5Str, float par6) {
-		super(par1, par2, par3, EnumOptions.ANAGLYPH, par5Str, par6);
+		super(par1, par2, par3, 200, 20, par5Str, "", par6, 0.0, 1.0, true, true);
 		constString = par5Str;
 	}
 
