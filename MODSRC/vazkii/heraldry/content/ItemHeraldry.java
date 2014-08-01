@@ -119,7 +119,7 @@ public class ItemHeraldry extends Item {
 
 	public static CrestData readCrestData(ItemStack stack) {
 		if(!stack.hasTagCompound())
-			return null;
+			return new CrestData(0xFFFFFF, 0xFFFFFF, (short) -1);
 
 		return CrestData.readFromCmp(stack.getTagCompound());
 	}
