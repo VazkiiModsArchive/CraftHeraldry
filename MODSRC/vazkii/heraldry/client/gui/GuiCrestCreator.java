@@ -64,6 +64,8 @@ public class GuiCrestCreator extends GuiScreen {
 
 		buttonList.add(new GuiButton(6, 15, height - 25, 60, 20, "Random"));
 		buttonList.add(new GuiButton(7, width / 2 - 80, height - 25, 200, 20, "Done"));
+		buttonList.add(new GuiButton(8, width - 159, height / 2 + 20, 60, 20, "Swap"));
+		buttonList.add(new GuiButton(9, width - 96, height / 2 + 20, 60, 20, "Invert"));
 
 		field = new GuiTextField(fontRendererObj, 85, height - 25, 140, 20);
 		field.setFocused(true);
@@ -84,9 +86,12 @@ public class GuiCrestCreator extends GuiScreen {
 		drawRect((width - 162) / 2, 29, (width - 30) / 2, 95, 0x55FFFFFF);
 		fontRendererObj.setUnicodeFlag(true);
 		drawCenteredString(fontRendererObj, "Heraldic Editor", width / 4, 3, 0xFFFFFF);
+		fontRendererObj.drawStringWithShadow(ClientProxy.iconNames.get(currentCrest.icon) + " (#" + (currentCrest.icon + 1) + ")", 2, 7, 0xFFFFFF);
+
 		fontRendererObj.drawStringWithShadow("Preview:", (width - 136) / 2, 18, 0xFFFFFF);
 		HeraldryRender.renderCrest(currentCrest, (width - 160) / 2, 30, zLevel + 0.1);
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
+		fontRendererObj.drawStringWithShadow("Current Icon:", 2, 7, 0xFFFFFF);
 
 		fontRendererObj.drawStringWithShadow("Background Color", 265, 76, 0xFFFFFF);
 		fontRendererObj.drawStringWithShadow("Foreground Color", 265, 186, 0xFFFFFF);
@@ -132,6 +137,20 @@ public class GuiCrestCreator extends GuiScreen {
 				System.out.println(currentCrest);
 				PacketHandler.INSTANCE.sendToServer(new PacketChangeBanner(currentCrest));
 				mc.displayGuiScreen(null);
+				break;
+			}
+			case 8 : { // Invert
+				int color1 = currentCrest.color2;
+				int color2 = currentCrest.color1;
+				currentCrest.color1 = color1;
+				currentCrest.color2 = color2;
+				updateSliders(currentCrest);
+				break;
+			}
+			case 9 : { // Invert
+				currentCrest.color1 = 0xFFFFFF - currentCrest.color1;
+				currentCrest.color2 = 0xFFFFFF - currentCrest.color2;
+				updateSliders(currentCrest);
 				break;
 			}
 		}

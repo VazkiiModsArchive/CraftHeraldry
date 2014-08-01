@@ -1,8 +1,10 @@
 package vazkii.heraldry.client.gui;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.EnumChatFormatting;
 
 import org.lwjgl.opengl.GL11;
 
@@ -49,10 +51,18 @@ public class GuiCrestList extends GuiSlot {
 	protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator, int a, int b) {
 		CrestData crest = new CrestData(0x000000, 0xFFFFFF, (short) (int) parent.viewableCrests.get(i));
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
-		HeraldryRender.renderCrest(crest, (j + 10) * 2, k * 2, parent.zLevel() + 0.1);
+		HeraldryRender.renderCrest(crest, j * 2, k * 2, parent.zLevel() + 0.1);
 		GL11.glScalef(2F, 2F, 2F);
 
-		Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(ClientProxy.iconNames.get(crest.icon), j + 50, k + 6, 0xFFFFFF);
+		FontRenderer font = Minecraft.getMinecraft().fontRenderer;
+		boolean uni = font.getUnicodeFlag();
+		font.setUnicodeFlag(true);
+		
+		GL11.glScalef(2F, 2F, 2F);
+		font.drawStringWithShadow(ClientProxy.iconNames.get(crest.icon), j / 2 + 18, k / 2, 0xFFFFFF);
+		GL11.glScaled(0.5F, 0.5F, 0.5F);
+		font.setUnicodeFlag(uni);
+		font.drawStringWithShadow("(#" + (crest.icon + 1) + ")", j + 40, k + 19, 0x888888);
 	}
 
 	@Override
