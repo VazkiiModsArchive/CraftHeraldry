@@ -26,7 +26,6 @@ public class CommonProxy {
 	public static Block blockHeraldry;
 
 	public void preInit(FMLPreInitializationEvent event) {
-		System.out.println("INITTING ALL THE CONTENT");
 		initContent();
 	}
 

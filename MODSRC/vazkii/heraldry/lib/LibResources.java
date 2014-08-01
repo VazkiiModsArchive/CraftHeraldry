@@ -19,6 +19,6 @@ public final class LibResources {
 	public static final String ICON_BANNER = "banner";
 	public static final String ICON_WALL_BANNER = "wallBanner";
 
-	public static final int ICON_COUNT = 876;
+	public static final int ICON_COUNT = 1270;
 
 }
