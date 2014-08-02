@@ -55,7 +55,7 @@ public class PacketChangeBanner implements IMessage, IMessageHandler<PacketChang
 
 	@Override
 	public IMessage onMessage(PacketChangeBanner message, MessageContext context) {
-		EntityPlayer player = context.side == Side.CLIENT ? FMLClientHandler.instance().getClient().thePlayer : context.getServerHandler().playerEntity;
+		EntityPlayer player = context.getServerHandler().playerEntity;
 		ItemStack item = player.getCurrentEquippedItem();
 		if(item != null && item.getItem() == CommonProxy.itemHeraldry && item.getItemDamage() == 0 && message.data != null) {
 			ItemHeraldry.writeCrestData(item, message.data);
