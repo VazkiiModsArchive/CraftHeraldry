@@ -70,6 +70,7 @@ public class GuiCrestCreator extends GuiScreen {
 		buttonList.add(new GuiButton(7, width / 2 - 80, height - 25, 200, 20, "Done"));
 		buttonList.add(new GuiButton(8, width - 159, height / 2 + 20, 60, 20, "Swap"));
 		buttonList.add(new GuiButton(9, width - 96, height / 2 + 20, 60, 20, "Invert"));
+		buttonList.add(new GuiButton(10, 258, 270, 100, 20, "Random Colors"));
 
 		field = new GuiTextField(fontRendererObj, 85, height - 25, 140, 20);
 		field.setFocused(true);
@@ -138,7 +139,6 @@ public class GuiCrestCreator extends GuiScreen {
 			break;
 		}
 		case 7 : { // Done
-			System.out.println(currentCrest);
 			PacketHandler.INSTANCE.sendToServer(new PacketChangeBanner(currentCrest));
 			mc.displayGuiScreen(null);
 			break;
@@ -154,6 +154,13 @@ public class GuiCrestCreator extends GuiScreen {
 		case 9 : { // Invert
 			currentCrest.color1 = 0xFFFFFF - currentCrest.color1;
 			currentCrest.color2 = 0xFFFFFF - currentCrest.color2;
+			updateSliders(currentCrest);
+			break;
+		}
+		case 10 : {
+			Random rand = new Random();
+			currentCrest.color1 = rand.nextInt(0xFFFFFF);
+			currentCrest.color2 = rand.nextInt(0xFFFFFF);
 			updateSliders(currentCrest);
 			break;
 		}
