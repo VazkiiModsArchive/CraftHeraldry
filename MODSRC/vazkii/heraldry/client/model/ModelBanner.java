@@ -15,6 +15,8 @@ import vazkii.heraldry.lib.LibResources;
 
 public class ModelBanner extends ModelBase {
 
+	public static final ModelBanner instance = new ModelBanner();
+	
 	ModelRenderer BannerHold;
 	ModelRenderer BannerHold2;
 	ModelRenderer BannerPillar;
@@ -53,13 +55,15 @@ public class ModelBanner extends ModelBase {
 		BannerBar.mirror = true;
 	}
 
-	public void render(boolean full, CrestData crest) {
+	public void render(boolean hold, boolean pillar, CrestData crest) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(LibResources.MODEL_BANNER));
-		if(full) {
+		if(hold) {
 			BannerHold.render(0.0625F);
 			BannerHold2.render(0.0625F);
-			BannerPillar.render(0.0625F);
 		}
+		
+		if(pillar)
+			BannerPillar.render(0.0625F);
 
 		BannerBar.render(0.0625F);
 

@@ -18,6 +18,7 @@ import vazkii.heraldry.core.proxy.CommonProxy;
 import vazkii.heraldry.lib.LibContent;
 import vazkii.heraldry.lib.LibMisc;
 import vazkii.heraldry.lib.LibResources;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -32,6 +33,8 @@ public class ItemHeraldry extends Item {
 		setCreativeTab(CreativeTabs.tabDecorations);
 		setUnlocalizedName(LibContent.HERALDRY_ITEM_NAME);
 		setHasSubtypes(true);
+		
+		GameRegistry.addRecipe(new RecipeHeldBanner());
 	}
 
 	@Override
@@ -60,7 +63,17 @@ public class ItemHeraldry extends Item {
 		par3List.add(new ItemStack(par1, 1, 1));
 		par3List.add(new ItemStack(par1, 1, 2));
 	}
-
+	
+	@Override
+	public boolean hasContainerItem(ItemStack stack) {
+		return stack.getItemDamage() == 0;
+	}
+	
+	@Override
+	public ItemStack getContainerItem(ItemStack itemStack) {
+		return itemStack.getItemDamage() == 0 ? itemStack : null;
+	}
+	
 	@Override
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
 		if(par1ItemStack.getItemDamage() == 0)
@@ -71,6 +84,9 @@ public class ItemHeraldry extends Item {
 
 	@Override
 	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
+		if(readCrestData(par1ItemStack).icon != -1)
+			return false;
+		
 		if(par7 == ForgeDirection.DOWN.ordinal() || par1ItemStack.getItemDamage() == 0 || par1ItemStack.getItemDamage() > 2)
 			return false;
 
@@ -129,6 +145,8 @@ public class ItemHeraldry extends Item {
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
 		if(par1ItemStack.getItemDamage() == 0)
 			par3List.add((readCrestData(par1ItemStack) == null ? "Blank, " : "") + "Right-Click to Edit");
+		else if(readCrestData(par1ItemStack).icon != -1)
+			par3List.add("Held Banner, can't be placed.");
 	}
 
 	@Override

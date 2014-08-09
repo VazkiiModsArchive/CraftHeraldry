@@ -7,7 +7,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
 import vazkii.heraldry.CraftHeraldry;
+import vazkii.heraldry.client.render.BannerItemRender;
 import vazkii.heraldry.client.render.RenderTileBanner;
 import vazkii.heraldry.content.TileEntityBanner;
 import vazkii.heraldry.lib.LibResources;
@@ -91,5 +94,6 @@ public class ClientProxy extends CommonProxy {
 		super.initContent();
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBanner.class, new RenderTileBanner());
+		MinecraftForgeClient.registerItemRenderer(itemHeraldry, new BannerItemRender());
 	}
 }

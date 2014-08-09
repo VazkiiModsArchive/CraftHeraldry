@@ -11,8 +11,6 @@ import vazkii.heraldry.content.TileEntityBanner;
 
 public class RenderTileBanner extends TileEntitySpecialRenderer {
 
-	ModelBanner model = new ModelBanner();
-
 	@Override
 	public void renderTileEntityAt(TileEntity tileentity, double d0, double d1, double d2, float f) {
 		TileEntityBanner banner = (TileEntityBanner) tileentity;
@@ -29,7 +27,7 @@ public class RenderTileBanner extends TileEntitySpecialRenderer {
 			GL11.glTranslatef(-0.57F, 0.85F, 0F);
 		} else GL11.glRotatef(BlockHeraldry.getOrientation(meta) * 45F, 0F, 1F, 0F);
 
-		model.render(!hanging, banner.data);
+		ModelBanner.instance.render(!hanging, !hanging, banner.data);
 		GL11.glScalef(1F, -1F, -1F);
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
